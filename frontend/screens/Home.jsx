@@ -8,7 +8,7 @@ const Home = () => {
     <View style = {defaultStyle}>
         <Header/>
         <View>
-            <Text style = {{ fontSize:25, fontWeight:"300" }}>Our</Text>
+            <Text style = {{ fontSize:25, fontWeight:"300" }}>Our</Text>    
             <Text style = {{ fontSize:25, fontWeight:"500" }}>Products</Text>
         </View>
 
