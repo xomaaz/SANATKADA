@@ -1,10 +1,33 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
 
+
+
+const categories = [
+    {category: "Flacko", _id: "001"}, 
+    {category: "A$AP", _id: "002"}, 
+    {category: "Devin", _id: "003"}, 
+    {category: "Craka", _id: "004"},
+    {category: "Maaz", _id: "005"},
+    {category: "Syed", _id: "006"},
+    {category: "Shah", _id: "007"}
+]
+
 const Home = () => {
+
+
+
+    const [category, setCategory] = useState("")
+    const [activeSearch, setActiveSearch] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
+
+    const categoryButtonHandler = (id) => {
+        setCategory(id);
+    } 
+
   return (
     <View style = {defaultStyle}>
         <Header/>
@@ -22,7 +45,7 @@ const Home = () => {
             </View> 
 
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>setActiveSearch((prev)=>!prev)}>
                     <Avatar.Icon 
                     icon={"magnify"}
                     size={50} 
@@ -33,9 +56,24 @@ const Home = () => {
         </View>
 
         <View style={{flexDirection: "row", height:80}}>
-            <Button style={{backgroundColor: colors.color5, borderRadius: 100, margin: 5}}>
-                <Text style={{fontSize: 12, color: "gray"}}>Categories</Text>
-            </Button>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{
+                alignItems:"center"
+            }}>
+            {
+                categories.map((item, index) => (
+                    <Button  key={item._id} style={{
+                        backgroundColor: category === item._id ? colors.color1 : colors.color5, 
+                        borderRadius: 100, 
+                        margin: 5}}
+                    onPress={()=>categoryButtonHandler(item._id)}
+                    >
+                    <Text style={{
+                        fontSize: 12, 
+                        color: category === item._id ? colors.color2 : "gray" }}>{item.category}</Text>
+                    </Button>
+                ))
+            }
+            </ScrollView>
         </View>
 
     </View>
