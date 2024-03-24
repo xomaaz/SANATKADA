@@ -6,6 +6,7 @@ import { Avatar, Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
+import Footer from '../components/Footer';
 
 
 
@@ -140,6 +141,9 @@ const Home = () => {
             </View>
 
         </View>
+
+        <Footer activeRoute={"Home"} />
+
     </>
   )
 }

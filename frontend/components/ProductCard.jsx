@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper'
 const ProductCard = ({ stock, name, price, image, id, addToCartHandler, i, navigate }) => {
   return (
     <TouchableOpacity 
-    activeOpacity={0.9}
+    activeOpacity={0.99}
     onPress={()=> navigate.navigate("productdetails", {id})}>
         <View style={{
             elevation: 5,
