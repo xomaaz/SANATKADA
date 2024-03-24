@@ -1,4 +1,4 @@
-import { View, Text, Platform, StatusBar, SafeAreaView, ScrollView, TouchableOpacity, BackHandler } from 'react-native'
+import { View, Text, Platform, StatusBar, SafeAreaView, ScrollView, TouchableOpacity, BackHandler, Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../styles/styles';
@@ -74,7 +74,9 @@ const SearchModal = ({searchQuery, setSearchQuery, setActiveSearch, products = [
 }
 
 const SearchItem = ({price, name, imgSrc, handler}) => {
-    <TouchableOpacity onPress={handler}>
+
+    return (
+        <TouchableOpacity onPress={handler}>
 
         <View style={{
             padding: 20,
@@ -93,11 +95,12 @@ const SearchItem = ({price, name, imgSrc, handler}) => {
                 uri: imgSrc
             }}
             style={{
-                width: 80,
-                height: 80,
+                width: 90,
+                height: 90,
                 position: "absolute",
                 resizeMode: "contain",
-                top: -15,
+                top: 5,
+                left: 0,
                 borderTopLeftRadius: 20,
                 borderBottomRightRadius: 20
             }}
@@ -115,6 +118,8 @@ const SearchItem = ({price, name, imgSrc, handler}) => {
         </View>
 
     </TouchableOpacity>
+
+    )
 }
 
 export default SearchModal 

@@ -17,7 +17,16 @@ const categories = [
     {category: "Shah", _id: "007"}
 ]
 
-const products = [];
+const products = [{
+    price: 549,
+    name:"YEEZY BOOST 350 V2",
+    _id: "001",
+    images: [
+        {
+            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
+        }
+    ]
+}];
 
 const Home = () => {
 
@@ -42,7 +51,7 @@ const Home = () => {
             products={products} 
             />
         )}
-        
+
         <View style = {defaultStyle}>
             <Header/>
 
