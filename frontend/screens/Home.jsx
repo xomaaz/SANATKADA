@@ -4,6 +4,8 @@ import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
 import SearchModal from '../components/SearchModal';
+import ProductCard from '../components/ProductCard';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -19,11 +21,23 @@ const categories = [
 
 const products = [{
     price: 549,
-    name:"YEEZY BOOST 350 V2",
+    stock: 23,
+    name:"YEEZY V2",
     _id: "001",
     images: [
         {
             url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
+        }
+    ]
+},
+{
+    price: 549,
+    stock: 23,
+    name:"YEEZY",
+    _id: "002",
+    images: [
+        {
+            url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
         }
     ]
 }];
@@ -35,10 +49,16 @@ const Home = () => {
     const [category, setCategory] = useState("")
     const [activeSearch, setActiveSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
+ 
+    const navigate = useNavigation();
 
     const categoryButtonHandler = (id) => {
         setCategory(id);
     } 
+
+    const addToCartHandler = (id) => {
+        console.log("Add to Cart", id)
+    }
 
   return (
     <>
@@ -96,6 +116,26 @@ const Home = () => {
                         </Button>
                     ))
                 }
+                </ScrollView>
+            </View>
+
+            <View style={{ flex:1 }}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {
+                        products.map((item, index) => (
+                            <ProductCard
+                            stock={item.stock}
+                            name={item.name}
+                            price={item.price}
+                            image={item.images[0]?.url}
+                            addToCartHandler={addToCartHandler}
+                            id={item._id}
+                            key={item._id}
+                            i={index}
+                            navigate={navigate}
+                            />
+                        ))
+                    }
                 </ScrollView>
             </View>
 
