@@ -8,8 +8,6 @@ import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
 
-
-
 const categories = [
     {category: "Flacko", _id: "001"}, 
     {category: "A$AP", _id: "002"}, 
