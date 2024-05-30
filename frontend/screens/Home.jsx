@@ -21,24 +21,24 @@ const categories = [
 ]
 
 const products = [{
-    price: 549,
+    price: 349,
     stock: 23,
-    name:"YEEZY V2",
+    name:"YEEZY",
     _id: "001",
     images: [
         {
-            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
+            url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
         }
     ]
 },
 {
     price: 549,
     stock: 23,
-    name:"YEEZY",
+    name:"YEEZY V2",
     _id: "002",
     images: [
         {
-            url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
+            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
         }
     ]
 }];

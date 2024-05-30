@@ -26,7 +26,7 @@ const ProductCard = ({ stock, name, price, image, id, addToCartHandler, i, navig
                 height: 200,
                 resizeMode: "contain",
                 position: "absolute",
-                left: 50,
+             // left: 50,
                 top: 105
             }}
             />
