@@ -3,7 +3,7 @@ import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'rea
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import Carousel from 'react-native-snap-carousel';
-import { Avatar } from 'react-native-paper';
+import { Avatar, Button } from 'react-native-paper';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -46,6 +46,11 @@ const ProductDetails = ( { route: { params } } ) => {
     const decrementQty = () => {
         if(quantity <= 1) return; // if quantity is <= 1, do nothing and return the same quantity
         setQuantity((prev) => prev - 1);
+    };
+
+    const addToCartHandler = () => {
+        if(stock == 0) return; // to add toast here
+        console.log("Adding to cart. Quantity = ", quantity);
     };
 
     return (
@@ -113,6 +118,16 @@ const ProductDetails = ( { route: { params } } ) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                    <TouchableOpacity activeOpacity={0.9} onPress={addToCartHandler}>
+                        <Button
+                            icon={'cart'}
+                            style={styles.buttonStyle}
+                            textColor={colors.color2}>
+                            Add to Cart
+                        </Button>
+                    </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -146,6 +161,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: colors.color5,
         marginHorizontal: 10,
+    },
+    buttonStyle: {
+        backgroundColor: colors.color3,
+        borderRadius: 100,
+        padding: 5,
+        marginVertical: 35,
     },
 });
 
