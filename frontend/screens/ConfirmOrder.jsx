@@ -41,6 +41,7 @@ const ConfirmOrder = () => {
             cartItems.map(i =>(
               <ConfirmOrderItem 
                 key={i.productID} 
+                price={i.price}
                 image={i.image} 
                 name={i.name}  
                 quantity={i.quantity} 
