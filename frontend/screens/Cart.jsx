@@ -22,14 +22,17 @@ const cartItems = [
     stock: 2,
     price: 450,
     quantity: 5,
-  }
+  },
 ]
 
 const Cart = () => {
 
-  const incrementHandler = () => {}
-  const decrementHandler = () => {}
-
+  const incrementHandler = (id, qty, stock) => {
+    console.log("increasing", id, qty, stock); // temporary placeholder until Redux store is implemented
+  };
+  const decrementHandler = (id, qty) => {
+    console.log("decreasing", id, qty); // temporary placeholder until Redux store is implemented
+  };
 
   return (
     <View style={{
@@ -51,7 +54,7 @@ const Cart = () => {
         paddingVertical: 20, 
         flex: 1,
       }}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {
             cartItems.map((i,index) => (
               <CartItem 

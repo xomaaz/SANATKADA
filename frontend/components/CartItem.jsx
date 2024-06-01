@@ -1,10 +1,12 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { colors } from '../styles/styles'
+import { Avatar } from 'react-native-paper'
+import { iconOptions } from '../screens/ProductDetails'
 
 const CartItem = ({
   name, amount, qty, stock, index, imgSrc, id, incrementHandler, decrementHandler
-}) => {
+  }) => {
   return (
     <View style={{
       flexDirection: "row",
@@ -51,12 +53,43 @@ const CartItem = ({
         </Text>
       </View>
       
-      <View>
+      <View style={styles.qtyContainer}>
+          <TouchableOpacity onPress={() => incrementHandler(id, qty, stock)}>
+            <Avatar.Icon icon="plus" {...iconOptions} />
+          </TouchableOpacity>
+
+          <Text style={styles.qtyText}>
+            {qty}
+          </Text>
+
+          <TouchableOpacity onPress={() => decrementHandler(id, qty)}>
+            <Avatar.Icon icon="minus" {...iconOptions} />
+          </TouchableOpacity>
 
       </View>
 
     </View>
   )
-}
+};
 
-export default CartItem
+const styles = StyleSheet.create({
+  qtyText: {
+    backgroundColor: colors.color4,
+    height: 25,
+    width: 25,
+    textAlignVertical: "center",
+    textAlign: "center",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: colors.color5,
+  },
+  qtyContainer: {
+    alignItems: "center",
+    width: "20%",
+    height: 80,
+    justifyContent: "space-between",
+    alignSelf: "center",
+  },
+});
+
+export default CartItem;
