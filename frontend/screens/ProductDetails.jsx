@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, Touchable, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import Carousel from 'react-native-snap-carousel';
@@ -24,7 +24,7 @@ const ProductDetails = ( { route: { params } } ) => {
 
     const name = "Yeezy";
     const price = "500"; 
-    const description = "The YEEZY BOOST 350 V2features an upper composed of re-engineered Primeknit. The post-dyed monofilament side stripe is woven into the upper. Reflective threads are woven into the laces. The midsole utilizes adidas’ innovative BOOST™ technology.";
+    const description = "The YEEZY BOOST 350 V2 features an upper composed of re-engineered Primeknit. The post-dyed monofilament side stripe is woven into the upper. Reflective threads are woven into the laces. The midsole utilizes adidas’ innovative BOOST™ technology.";
     const stock = 5; // temporary stock amount
 
     const images = [
@@ -78,45 +78,42 @@ const ProductDetails = ( { route: { params } } ) => {
                 <Text numberOfLines={2} style={{ fontSize: 25, }}>{name}</Text>
                 <Text style={{ fontSize: 18, fontWeight: "900" }}>${price}</Text>
                 <Text numberOfLines={8} style={{ letterSpacing: 1, lineHeight: 20, marginVertical: 15, }}>{description}</Text>
+                
+                <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 20,
+                    justifyContent: "space-between",
+                }}>
+                    <Text style={{
+                        color: colors.color3,
+                        fontWeight: "100",
+                    }}>Quantity</Text>
+
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginLeft: 20, // Add some spacing between "Quantity" text and buttons
+                    }}>
+                        <TouchableOpacity onPress={decrementQty}>
+                            <Avatar.Icon 
+                                icon={'minus'}
+                                {...iconOptions} 
+                            />
+                        </TouchableOpacity>
+                        <Text style={styles.quantityStyle}>
+                            {quantity}
+                        </Text>
+                        <TouchableOpacity onPress={incrementQty}>
+                            <Avatar.Icon 
+                                icon={'plus'}
+                                {...iconOptions} 
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-
-            <View style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 5
-            }}>
-                <Text style={{
-                    colors: colors.color3,
-                    fontWeight: "100",
-                }}>Quantity</Text>
-            </View>
-
-            <View style={{
-                width: 80,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-            }}>
-                <TouchableOpacity onPress={decrementQty}>
-                    <Avatar.Icon 
-                        icon={'minus'}
-                        {...iconOptions} 
-                    />
-                </TouchableOpacity>
-                <Text style={styles.quantityStyle}>
-                    {quantity}
-                </Text>
-
-                <TouchableOpacity onPress={incrementQty}>
-                    <Avatar.Icon 
-                        icon={'plus'}
-                        {...iconOptions} 
-                    />
-                </TouchableOpacity>
-
-            </View>
-
         </View>
     );
 };
@@ -148,6 +145,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         borderColor: colors.color5,
+        marginHorizontal: 10,
     },
 });
 
