@@ -7,6 +7,7 @@ import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
+import Heading from '../components/Heading';
 
 const categories = [
     {category: "Flacko", _id: "001"}, 
@@ -81,10 +82,8 @@ const Home = () => {
                 alignItems: "center"
             }}>
 
-                <View>
-                    <Text style = {{ fontSize:25, fontWeight:"300" }}>Our</Text>    
-                    <Text style = {{ fontSize:25, fontWeight:"500" }}>Products</Text>
-                </View> 
+                {/* Heading */}
+                <Heading text1='Our' text2='Products' />
 
                 <View>
                     <TouchableOpacity onPress={()=>setActiveSearch((prev)=>!prev)}>
