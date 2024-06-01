@@ -6,8 +6,9 @@ import Heading from '../components/Heading'
 import { Button } from 'react-native-paper'
 import { colors } from '../styles/styles'
 import CartItem from '../components/CartItem'
+import { useNavigation } from '@react-navigation/native'
 
-const cartItems = [
+export const cartItems = [
   {
     name: "Yeezy",
     image: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png",
@@ -26,6 +27,8 @@ const cartItems = [
 ]
 
 const Cart = () => {
+
+  navigator = useNavigation();
 
   const incrementHandler = (id, qty, stock) => {
     console.log("increasing", id, qty, stock); // temporary placeholder until Redux store is implemented
@@ -83,18 +86,26 @@ const Cart = () => {
         <Text>$5</Text>
       </View>
 
-      <TouchableOpacity>
-            <Button style={{
-              backgroundColor: colors.color3,
-              borderRadius: 100,
-              padding: 5,
-              margin: 30,
-              }}
-              icon={"cart"}
-              textColor={colors.color2}
-            >
-              Checkout
-            </Button>
+      <TouchableOpacity 
+        onPress={
+          cartItems.length > 0
+          ? () => navigator.navigate("confirmorder")
+          : Toast.show({
+              type: "error",
+              text1: "Out of Stock",
+            })
+        }>
+        <Button style={{
+          backgroundColor: colors.color3,
+          borderRadius: 100,
+          padding: 5,
+          margin: 30,
+          }}
+          icon={"cart"}
+          textColor={colors.color2}
+        >
+          Checkout
+        </Button>
       </TouchableOpacity>
       
     </View>
