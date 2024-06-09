@@ -65,7 +65,15 @@ const Footer = ({ activeRoute = "Home" }) => {
             >
                 <Avatar.Icon
                 { ...avatarOptions }
-                icon={ activeRoute === "profile" ? "account" : "account-outline" }
+                icon={ 
+                    isAuthenticated === false
+                    ? activeRoute === "profile" 
+                        ? "login" 
+                        : "login"
+                    : activeRoute === "profile" 
+                        ? "account" 
+                        : "account-outline" 
+                }
                 />
             </TouchableOpacity>
 
