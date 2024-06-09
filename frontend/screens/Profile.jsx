@@ -3,11 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors, defaultStyle, formHeading } from '../styles/styles'
 import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox';
+import Footer from '../components/Footer';
 
 const user = {
   name: "Yoman",
   email: "yoman@gmail.com",
 };
+const loading = false;
 
 const Profile = ({ navigation }) => {
 
@@ -15,56 +17,68 @@ const Profile = ({ navigation }) => {
   const navigateHandler = () => {}
 
   return (
-    <View style={defaultStyle}>
-      {/* Heading */}
-      <View style={{ marginBottom: 20 }}>
-        <Text style={formHeading}>Profile</Text>
-      </View>
+    <>
+      <View style={defaultStyle}>
+        {/* Heading */}
+        <View style={{ marginBottom: 20 }}>
+          <Text style={formHeading}>Profile</Text>
+        </View>
 
-      {/* Loading*/}
-      <View style={styles.container}>
-        <Avatar.Image 
-          source={{
-            uri: avatar
-            }} 
-          size={100} 
-          style={{ backgroundColor: colors.color1 }}
-        />
+        {/* Loading*/}
+        <View style={styles.container}>
+          <Avatar.Image 
+            source={{
+              uri: avatar
+              }} 
+            size={100} 
+            style={{ backgroundColor: colors.color1 }}
+          />
 
-        <TouchableOpacity 
-          onPress={() => navigation.navigate("camera", { updateProfile: true })}
+          <TouchableOpacity 
+            onPress={() => navigation.navigate("camera", { updateProfile: true })}
+          >
+            <Button textColor={colors.color1}>Change Photo</Button>
+          </TouchableOpacity>
+
+          <Text style={styles.name}>
+            {user?.name}
+          </Text>
+
+          <Text style={{
+            fontWeight: "300",
+            color: colors.color2,
+          }}>
+            {user?.email}
+          </Text>
+        </View>
+
+        <View>
+          <View style={{
+            flexDirection: "row",
+            margin: 10,
+            justifyContent: 'space-between',
+          }}
         >
-          <Button textColor={colors.color1}>Change Photo</Button>
-        </TouchableOpacity>
+          <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
+          <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
+          <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
+          </View>
 
-        <Text style={styles.name}>
-          {user?.name}
-        </Text>
-
-        <Text style={{
-          fontWeight: "300",
-          color: colors.color2,
-        }}>
-          {user?.email}
-        </Text>
-      </View>
-
-      <View>
-        <View style={{
-          flexDirection: "row",
-          margin: 10,
-          justifyContent: 'space-between',
-        }}
-      >
-        <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
-        <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
-        <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
-        
+          <View style={{
+            flexDirection: "row",
+            margin: 10,
+            justifyContent: 'space-evenly',
+          }}
+        >
+          <ButtonBox handler={navigateHandler} text={"Password"} icon={"pencil"} />
+          <ButtonBox handler={navigateHandler} text={"Log Out"} icon={"exit-to-app"} reverse={true} />
+          </View>
 
         </View>
+        
       </View>
-
-    </View>
+      <Footer />
+    </>
   )
 }
 
