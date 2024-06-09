@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors, defaultStyle, formHeading } from '../styles/styles'
 import { Avatar, Button } from 'react-native-paper'
+import ButtonBox from '../components/ButtonBox';
 
 const user = {
   name: "Yoman",
@@ -11,6 +12,7 @@ const user = {
 const Profile = ({ navigation }) => {
 
   const [avatar, setAvatar] = useState(null);
+  const navigateHandler = () => {}
 
   return (
     <View style={defaultStyle}>
@@ -52,7 +54,12 @@ const Profile = ({ navigation }) => {
           flexDirection: "row",
           margin: 10,
           justifyContent: 'space-between',
-        }}>
+        }}
+      >
+        <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
+        <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
+        <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
+        
 
         </View>
       </View>
