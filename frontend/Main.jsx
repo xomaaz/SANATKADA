@@ -8,6 +8,8 @@ import Cart from './screens/Cart';
 import ConfirmOrder from './screens/ConfirmOrder';
 import Payment from './screens/Payment';
 import Profile from './screens/Profile';
+import UpdateProfile from './screens/UpdateProfile';
+import Orders from './screens/Orders';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +29,8 @@ const Main = () => {
         <Stack.Screen name="confirmorder" component={ConfirmOrder} />
         <Stack.Screen name="payment" component={Payment} />
         <Stack.Screen name="profile" component={Profile} />
+        <Stack.Screen name="updateprofile" component={UpdateProfile} />
+        <Stack.Screen name="orders" component={Orders} />
       </Stack.Group>
     </Stack.Navigator>
 
