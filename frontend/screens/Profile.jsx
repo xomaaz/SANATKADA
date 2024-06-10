@@ -4,6 +4,7 @@ import { colors, defaultStyle, formHeading } from '../styles/styles'
 import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox';
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 const user = {
   name: "Yoman",
@@ -14,7 +15,8 @@ const loading = false;
 const Profile = ({ navigation }) => {
 
   const [avatar, setAvatar] = useState(null);
-  const navigateHandler = () => {}
+  
+  const navigateHandler = (text) => {}
 
   return (
     <>
@@ -25,57 +27,64 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* Loading*/}
-        <View style={styles.container}>
-          <Avatar.Image 
-            source={{
-              uri: avatar
-              }} 
-            size={100} 
-            style={{ backgroundColor: colors.color1 }}
-          />
-
-          <TouchableOpacity 
-            onPress={() => navigation.navigate("camera", { updateProfile: true })}
-          >
-            <Button textColor={colors.color1}>Change Photo</Button>
-          </TouchableOpacity>
-
-          <Text style={styles.name}>
-            {user?.name}
-          </Text>
-
-          <Text style={{
-            fontWeight: "300",
-            color: colors.color2,
-          }}>
-            {user?.email}
-          </Text>
-        </View>
-
-        <View>
-          <View style={{
-            flexDirection: "row",
-            margin: 10,
-            justifyContent: 'space-between',
-          }}
-        >
-          <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
-          <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
-          <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
-          </View>
-
-          <View style={{
-            flexDirection: "row",
-            margin: 10,
-            justifyContent: 'space-evenly',
-          }}
-        >
-          <ButtonBox handler={navigateHandler} text={"Password"} icon={"pencil"} />
-          <ButtonBox handler={navigateHandler} text={"Log Out"} icon={"exit-to-app"} reverse={true} />
-          </View>
-
-        </View>
         
+        {
+          loading ? <Loader /> : (
+            <>
+              <View style={styles.container}>
+                <Avatar.Image 
+                  source={{
+                    uri: avatar
+                    }} 
+                  size={100} 
+                  style={{ backgroundColor: colors.color1 }}
+                />
+
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate("camera", { updateProfile: true })}
+                >
+                  <Button textColor={colors.color1}>Change Photo</Button>
+                </TouchableOpacity>
+
+                <Text style={styles.name}>
+                  {user?.name}
+                </Text>
+
+                <Text style={{
+                  fontWeight: "300",
+                  color: colors.color2,
+                }}>
+                  {user?.email}
+                </Text>
+              </View>
+
+              <View>
+                <View style={{
+                  flexDirection: "row",
+                  margin: 10,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
+                <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
+                <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
+                </View>
+
+                <View style={{
+                  flexDirection: "row",
+                  margin: 10,
+                  justifyContent: 'space-evenly',
+                }}
+              >
+                <ButtonBox handler={navigateHandler} text={"Password"} icon={"pencil"} />
+                <ButtonBox handler={navigateHandler} text={"Log Out"} icon={"exit-to-app"} reverse={true} />
+                </View>
+
+              </View>
+            </>
+          )
+        }
+
       </View>
       <Footer />
     </>
