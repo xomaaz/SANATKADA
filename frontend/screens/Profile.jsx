@@ -16,7 +16,29 @@ const Profile = ({ navigation }) => {
 
   const [avatar, setAvatar] = useState(null);
   
-  const navigateHandler = (text) => {}
+  const navigateHandler = (text) => {
+    switch (text) {
+      case "Admin":
+        navigation.navigate("adminpanel");
+        break;
+      case "Orders":
+        navigation.navigate("orders");
+        break;
+      case "Profile":
+        navigation.navigate("updateprofile");
+        break;
+      case "Password":
+        navigation.navigate("changepassword");
+        break;
+      case "Sign Out":
+        logoutHandler();
+        break;
+      default:
+        case "Orders":
+          navigation.navigate("orders");
+        break;
+    }
+  }
 
   return (
     <>
