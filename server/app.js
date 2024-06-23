@@ -6,3 +6,7 @@ config({
 });
 
 export const app = express();
+
+// Importing Routers
+import user from "./routes/user.js";
+app.use("/api/v1/user", user);
