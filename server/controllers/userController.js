@@ -2,6 +2,7 @@
 // and thus, errors are handled differently than when using a try/catch block
 
 import { User } from "../models/userModel.js";
+import ErrorHandler from "../utils/errorHandler.js";
 
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -14,15 +15,12 @@ export const login = async (req, res, next) => {
   const isMatched = await user.comparePassword(password) // compare entered password with stored
 
   if(!isMatched) {
-    return res.status(400).json({
-      success: false,
-      message: "Incorrect Password"
-    });
+    return next(new ErrorHandler("Incorrect Password", 400)); // we use ErrorHandler custom class (can handle two args; here, message and status code) instead of Error (can only handle one arg)
   } else {
     res.status(200).json({
       success: true,
       message: `Welcome Back, ${user.name}`
-    })
+    });
   }
 
 };
