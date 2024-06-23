@@ -52,4 +52,8 @@ schema.pre("save", async function () { // before saving the schema, this arrow f
   this.password = await bcrypt.hash(this.password, 10); // hash password and overwrite using it
 });
 
+schema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password); // compare user-entered password in login screen with stored encrypted password and return true/false result
+};
+
 export const User = mongoose.model("User", schema);
