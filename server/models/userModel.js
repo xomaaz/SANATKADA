@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
 
 const schema = new mongoose.Schema({
   name: {
@@ -45,6 +46,10 @@ const schema = new mongoose.Schema({
   },
   otp: Number,
   otp_expire: Date,
+});
+
+schema.pre("save", async function () { // before saving the schema, this arrow function will be called
+  this.password = await bcrypt.hash(this.password, 10); // hash password and overwrite using it
 });
 
 export const User = mongoose.model("User", schema);
