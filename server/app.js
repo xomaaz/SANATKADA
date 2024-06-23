@@ -7,6 +7,9 @@ config({
 
 export const app = express();
 
+// Using Middleware
+app.use(express.json()); // json body parser middleware
+
 app.get("/", (req,res,next) => {
   res.send("Working");
 });
