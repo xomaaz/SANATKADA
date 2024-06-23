@@ -7,6 +7,10 @@ config({
 
 export const app = express();
 
+app.get("/", (req,res,next) => {
+  res.send("Working");
+});
+
 // Importing Routers
 import user from "./routes/user.js";
 app.use("/api/v1/user", user);
