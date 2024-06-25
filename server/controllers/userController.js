@@ -4,6 +4,7 @@
 import { asyncError } from "../middleware/error.js";
 import { User } from "../models/userModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import { sendToken } from "../utils/features.js";
 
 export const login = asyncError(async (req, res, next) => {
   const { email, password } = req.body;
@@ -22,18 +23,7 @@ export const login = asyncError(async (req, res, next) => {
   if(!isMatched) {
     return next(new ErrorHandler("Incorrect Email or Password", 400)); // we use ErrorHandler custom class (can handle two args; here, message and status code) instead of Error (can only handle one arg)
   } else {
-
-    const token = user.generateToken();
-
-    res
-      .status(200)
-      .cookie("token", token, {
-        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // the cookie expires in 15 days (expressed in milliseconds)
-      }).json({
-        success: true,
-        message: `Welcome Back, ${user.name}`,
-        token,
-    });
+    sendToken(user, res, `Welcome Back, ${user.name}`, 200);
   }
 });
 
