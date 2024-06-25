@@ -1,10 +1,11 @@
 // NOTE that the API made here does not utilize try/catch block as some other API implementations,
 // and thus, errors are handled differently than when using a try/catch block
 
+import { asyncError } from "../middleware/error.js";
 import { User } from "../models/userModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
-export const login = async (req, res, next) => {
+export const login = asyncError(async (req, res, next) => {
   const { email, password } = req.body;
 
   // find the user based on the unique email together with the corresponding stored password
@@ -22,10 +23,9 @@ export const login = async (req, res, next) => {
       message: `Welcome Back, ${user.name}`
     });
   }
+});
 
-};
-
-export const signup = async (req, res, next) => {
+export const signup = asyncError(async (req, res, next) => {
 
   const {name, email, password, address, city, country, pinCode} = req.body;
 
@@ -44,4 +44,4 @@ export const signup = async (req, res, next) => {
     success: true,
     message: "Registered Successfully"
   });
-};
+});
