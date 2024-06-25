@@ -31,9 +31,13 @@ export const signup = asyncError(async (req, res, next) => {
 
   const {name, email, password, address, city, country, pinCode} = req.body;
 
+  let user = await User.findOne({ email });
+
+  if (user) return next(new ErrorHandler("User Already Exists", 400)); // if user already exists based on email
+
   // Add Cloudinary here (later...)
 
-  await User.create({
+  user = await User.create({ // if user doesn't exist
     name, 
     email, 
     password, 
@@ -42,8 +46,7 @@ export const signup = asyncError(async (req, res, next) => {
     country, 
     pinCode,
   });
-  res.status(201).json({
-    success: true,
-    message: "Registered Successfully"
-  });
+
+  sendToken(user, res, `Registered Successfully`, 201);
+
 });
