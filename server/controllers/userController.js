@@ -13,14 +13,21 @@ export const login = asyncError(async (req, res, next) => {
 
   // Handle error (later...)
 
+  if (!user) {
+    return res.status(400).json({success: false, message: "Incorrect Email or Password"});
+  }
+
   const isMatched = await user.comparePassword(password) // compare entered password with stored
 
   if(!isMatched) {
-    return next(new ErrorHandler("Incorrect Password", 400)); // we use ErrorHandler custom class (can handle two args; here, message and status code) instead of Error (can only handle one arg)
+    return next(new ErrorHandler("Incorrect Email or Password", 400)); // we use ErrorHandler custom class (can handle two args; here, message and status code) instead of Error (can only handle one arg)
   } else {
+
+    const token = user.generateToken();
+
     res.status(200).json({
       success: true,
-      message: `Welcome Back, ${user.name}`
+      message: `Welcome Back, ${user.name}`, token
     });
   }
 });
