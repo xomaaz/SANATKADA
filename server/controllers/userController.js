@@ -25,9 +25,14 @@ export const login = asyncError(async (req, res, next) => {
 
     const token = user.generateToken();
 
-    res.status(200).json({
-      success: true,
-      message: `Welcome Back, ${user.name}`, token
+    res
+      .status(200)
+      .cookie("token", token, {
+        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // the cookie expires in 15 days (expressed in milliseconds)
+      }).json({
+        success: true,
+        message: `Welcome Back, ${user.name}`,
+        token,
     });
   }
 });
