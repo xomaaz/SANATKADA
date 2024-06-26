@@ -1,5 +1,6 @@
 import express from "express";
-import { login, signup } from "../controllers/userController.js";
+import { getMyProfile, login, signup } from "../controllers/userController.js";
+import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -8,5 +9,7 @@ const router = express.Router();
 router.post("/login", login); 
 
 router.post("/signup", signup);
+
+router.get("/me", isAuthenticated, getMyProfile) // if next is used in isAuthenticated, only then getMyProfile will be invoked
 
 export default router;

@@ -42,7 +42,7 @@ const ProductCard = ({ stock, name, price, image, id, addToCartHandler, i, navig
                     fontSize: 25,
                     fontWeight: "200"
                 }}>
-                    {name}
+                    {name}Z
                 </Text>
 
                 <Text numberOfLines={1} style={{
