@@ -1,7 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
-import { errorMiddleware } from "./middleware/error.js";
 import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middleware/error.js";
 
 config({
   path: "./data/config.env",

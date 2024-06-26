@@ -49,8 +49,12 @@ const schema = new mongoose.Schema({
   otp_expire: Date,
 });
 
-schema.pre("save", async function () { // before saving the schema, this arrow function will be called
-  this.password = await bcrypt.hash(this.password, 10); // hash password and overwrite using it
+schema.pre("save", async function (next) { // before saving the schema, this arrow function will be called
+  if (!this.isModified("password")) {
+    return next();
+  } else {
+    this.password = await bcrypt.hash(this.password, 10); // hash password and overwrite using it
+  }
 });
 
 schema.methods.comparePassword = async function (enteredPassword) {

@@ -18,7 +18,7 @@ export const login = asyncError(async (req, res, next) => {
     return res.status(400).json({success: false, message: "Incorrect Email or Password"});
   }
 
-  const isMatched = await user.comparePassword(password) // compare entered password with stored
+  const isMatched = await user.comparePassword(password); // compare entered password with stored
 
   if(!isMatched) {
     return next(new ErrorHandler("Incorrect Email or Password", 400)); // we use ErrorHandler custom class (can handle two args; here, message and status code) instead of Error (can only handle one arg)
@@ -76,3 +76,44 @@ export const logOut = asyncError(async (req, res, next) => {
 
 });
 
+export const updateProfile = asyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  const { name, email, address, city, country, pinCode } = req.body;
+
+  if (name) user.name = name;
+  if (email) user.email = email;
+  if (address) user.address = address;
+  if (city) user.city = city;
+  if (country) user.country = country;
+  if (pinCode) user.pinCode = pinCode;
+
+  await user.save();
+
+  res.status(200).json({
+      success: true,
+      message: "Profile Updated Successfully",
+  });
+
+});
+
+export const changePassword = asyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select("+password");
+
+  const { oldPassword, newPassword } = req.body;
+
+  const isMatched = await user.comparePassword(oldPassword); // compare entered password with stored
+
+  if(!isMatched) {
+    return next(new ErrorHandler("Incorrect Old Password"));
+  } else {
+    user.password = newPassword;
+    await user.save(); // we don't need to rehash the password again as the hashing function will be automatically called before saving. Remember, "pre-save" schema.
+  }
+
+  res.status(200).json({
+      success: true,
+      message: "Password Changed Successfully",
+  });
+
+});
