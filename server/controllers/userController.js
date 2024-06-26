@@ -52,5 +52,11 @@ export const signup = asyncError(async (req, res, next) => {
 });
 
 export const getMyProfile = asyncError(async (req, res, next) => {
-  res.send("Working");
+  const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
+  
+  res.status(200).json({
+    success: true,
+    user, // displays user profile hoorain fatima
+  });
+
 });
