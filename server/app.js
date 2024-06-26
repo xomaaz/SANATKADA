@@ -18,7 +18,7 @@ app.get("/", (req, res, next) => {
 });
 
 // Importing Routers
-import user from "./routes/user.js";
+import user from "./routes/userRoutes.js";
 
 app.use("/api/v1/user", user);
 
