@@ -12,10 +12,13 @@ export const login = asyncError(async (req, res, next) => {
   // find the user based on the unique email together with the corresponding stored password
   const user = await User.findOne({ email }).select("+password"); // .select("+password") allows password to be fetched when select is set to 'false' in schema
 
-  // Handle error (later...)
-
+  // Handle error
   if (!user) {
-    return res.status(400).json({success: false, message: "Incorrect Email or Password"});
+    return next(new ErrorHandler("Incorrect Email or Password", 400));
+  }
+
+  if (!password) {
+    return next(new ErrorHandler("Please Enter Password", 400));
   }
 
   const isMatched = await user.comparePassword(password); // compare entered password with stored
@@ -102,10 +105,12 @@ export const changePassword = asyncError(async (req, res, next) => {
 
   const { oldPassword, newPassword } = req.body;
 
+  if (!oldPassword || !newPassword) return next(new ErrorHandler("Please Enter Both Old & New Password", 400));
+
   const isMatched = await user.comparePassword(oldPassword); // compare entered password with stored
 
   if(!isMatched) {
-    return next(new ErrorHandler("Incorrect Old Password"));
+    return next(new ErrorHandler("Incorrect Old Password", 400));
   } else {
     user.password = newPassword;
     await user.save(); // we don't need to rehash the password again as the hashing function will be automatically called before saving. Remember, "pre-save" schema.
