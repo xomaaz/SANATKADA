@@ -1,3 +1,8 @@
+
+export const getDataUri = () => {
+  
+}
+
 export const sendToken = (user, res, message, statusCode) => {
   const token = user.generateToken();
 

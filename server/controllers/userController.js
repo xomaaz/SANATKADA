@@ -122,3 +122,13 @@ export const changePassword = asyncError(async (req, res, next) => {
   });
 
 });
+
+export const updatePic = asyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
+  
+  res.status(200).json({
+    success: true,
+    user, // displays user profile
+  });
+
+});
