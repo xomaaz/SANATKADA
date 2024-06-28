@@ -4,7 +4,8 @@
 import { asyncError } from "../middleware/error.js";
 import { User } from "../models/userModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import { cookieOptions, sendToken } from "../utils/features.js";
+import { cookieOptions, getDataUri, sendToken } from "../utils/features.js";
+import cloudinary from "cloudinary";
 
 export const login = asyncError(async (req, res, next) => {
   const { email, password } = req.body;
@@ -38,7 +39,9 @@ export const signup = asyncError(async (req, res, next) => {
 
   if (user) return next(new ErrorHandler("User Already Exists", 400)); // if user already exists based on email
 
-  // Add Cloudinary here (later...)
+  const file = getDataUri(req.file);
+  const myCloud = await cloudinary.v2.uploader.upload(file.content);
+  console.log(myCloud.secure_url);
 
   user = await User.create({ // if user doesn't exist
     name, 
