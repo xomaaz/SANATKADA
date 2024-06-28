@@ -39,11 +39,19 @@ export const signup = asyncError(async (req, res, next) => {
 
   if (user) return next(new ErrorHandler("User Already Exists", 400)); // if user already exists based on email
 
-  const file = getDataUri(req.file);
-  const myCloud = await cloudinary.v2.uploader.upload(file.content);
-  console.log(myCloud.secure_url);
+  let avatar = undefined;
+
+  if (req.file) { // if the request includes a file
+    const file = getDataUri(req.file);
+    const myCloud = await cloudinary.v2.uploader.upload(file.content);
+    avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    }
+  }
 
   user = await User.create({ // if user doesn't exist
+    avatar,
     name, 
     email, 
     password, 
