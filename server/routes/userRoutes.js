@@ -19,6 +19,8 @@ router.get("/logout", isAuthenticated, logOut);
 // Updating routes
 router.put("/updateprofile", isAuthenticated, updateProfile);
 router.put("/changepassword", isAuthenticated, changePassword);
-router.put("/updatepic", isAuthenticated, updatePic);
+router.put("/updatepic", isAuthenticated, singleUpload, updatePic);
+
+// Forget password and reset password
 
 export default router;

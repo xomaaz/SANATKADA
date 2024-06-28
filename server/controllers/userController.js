@@ -31,6 +31,7 @@ export const login = asyncError(async (req, res, next) => {
   }
 });
 
+
 export const signup = asyncError(async (req, res, next) => {
 
   const {name, email, password, address, city, country, pinCode} = req.body;
@@ -62,8 +63,8 @@ export const signup = asyncError(async (req, res, next) => {
   });
 
   sendToken(user, res, `Registered Successfully`, 201);
-
 });
+
 
 export const getMyProfile = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
@@ -72,8 +73,8 @@ export const getMyProfile = asyncError(async (req, res, next) => {
     success: true,
     user, // displays user profile
   });
-
 });
+
 
 export const logOut = asyncError(async (req, res, next) => {
   
@@ -89,6 +90,7 @@ export const logOut = asyncError(async (req, res, next) => {
   });
 
 });
+
 
 export const updateProfile = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
@@ -108,8 +110,8 @@ export const updateProfile = asyncError(async (req, res, next) => {
       success: true,
       message: "Profile Updated Successfully",
   });
-
 });
+
 
 export const changePassword = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id).select("+password");
@@ -131,15 +133,23 @@ export const changePassword = asyncError(async (req, res, next) => {
       success: true,
       message: "Password Changed Successfully",
   });
-
 });
+
 
 export const updatePic = asyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
   
+    const file = getDataUri(req.file); // get the buffer data from image
+    await cloudinary.v2.uploader.destroy(user.avatar.public_id); // delete previously-stored avatar in Cloudinary
+    const myCloud = await cloudinary.v2.uploader.upload(file.content); // upload new avatar image
+    user.avatar = { // store avatar details as an object in database
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+    await user.save(); // save user data
+
   res.status(200).json({
     success: true,
-    user, // displays user profile
+    message: "Avatar Updated Successfully", // displays user profile
   });
-
 });
