@@ -4,7 +4,7 @@
 import { asyncError } from "../middleware/error.js";
 import { User } from "../models/userModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import { cookieOptions, getDataUri, sendToken } from "../utils/features.js";
+import { cookieOptions, getDataUri, sendEmail, sendToken } from "../utils/features.js";
 import cloudinary from "cloudinary";
 
 export const login = asyncError(async (req, res, next) => {
@@ -157,23 +157,36 @@ export const updatePic = asyncError(async (req, res, next) => {
 
 export const forgetPassword = asyncError(async (req, res, next) => {
   const { email } = req.body;
-  const user = await User.findOne({email});
+  const user = await User.findOne({email}); // finding the user based on email
 
-  if (!user) return next(new ErrorHandler("Incorrect Email", 404));
+  if (!user) return next(new ErrorHandler("Incorrect Email", 404)); // if user doesn't exist
   
+  // if user does exist:
+
   // if min = 200 & max = 10000
   // to get random, formula: math.random()*(max-mix) +  min
   const randomNumber = Math.random() * (999999 - 100000) + 100000; // random 6-digit number
   const otp = Math.floor(randomNumber);
-  const otp_expire = 1000 * 60 * 15; // 15-minute expiry time
+  const otp_expire = 1000 * 60 * 15; // 15-minute expiry time for OTP
 
   user.otp = otp;
   user.otp_expire = new Date(Date.now() + otp_expire);
 
   await user.save();
+  console.log(otp);
+  
+  const message = `Your OTP for resetting password is ${otp}.\nPlease ignore if you weren't the one requesting this.`;
 
-  // sendEmail() function to send opt via email to be created later...
-
+  try {
+    // this mails to mailtrap.io email testing inbox; use a paid email service to send actual emails
+    await sendEmail("OTP For Reseting Password", user.email, message);
+  } catch (error) {
+    user.otp = null;
+    user.otp_expire = null;
+    await user.save();
+    return next(error);
+  }
+  
   res.status(200).json({
     success: true,
     message: `Email Sent To ${user.email}`, // displays user profile
