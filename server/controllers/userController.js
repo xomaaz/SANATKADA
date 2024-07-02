@@ -153,3 +153,40 @@ export const updatePic = asyncError(async (req, res, next) => {
     message: "Avatar Updated Successfully", // displays user profile
   });
 });
+
+
+export const forgetPassword = asyncError(async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({email});
+
+  if (!user) return next(new ErrorHandler("Incorrect Email", 404));
+  
+  // if min = 200 & max = 10000
+  // to get random, formula: math.random()*(max-mix) +  min
+  const randomNumber = Math.random() * (999999 - 100000) + 100000; // random 6-digit number
+  const otp = Math.floor(randomNumber);
+  const otp_expire = 1000 * 60 * 15; // 15-minute expiry time
+
+  user.otp = otp;
+  user.otp_expire = new Date(Date.now() + otp_expire);
+
+  await user.save();
+
+  // sendEmail() function to send opt via email to be created later...
+
+  res.status(200).json({
+    success: true,
+    message: `Email Sent To ${user.email}`, // displays user profile
+  });
+});
+
+
+export const resetPassword = asyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
+  
+  res.status(200).json({
+    success: true,
+    user, // displays user profile
+  });
+});
+
