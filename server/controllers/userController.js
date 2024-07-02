@@ -173,7 +173,6 @@ export const forgetPassword = asyncError(async (req, res, next) => {
   user.otp_expire = new Date(Date.now() + otp_expire);
 
   await user.save();
-  console.log(otp);
   
   const message = `Your OTP for resetting password is ${otp}.\nPlease ignore if you weren't the one requesting this.`;
 
@@ -189,17 +188,34 @@ export const forgetPassword = asyncError(async (req, res, next) => {
   
   res.status(200).json({
     success: true,
-    message: `Email Sent To ${user.email}`, // displays user profile
+    message: `Email Sent To ${user.email}`,
   });
 });
 
 
 export const resetPassword = asyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id); // as user was stored in req.user in the previous handler isAuthenticated
+  const { otp, password } = req.body; // get otp and new password from request body (in JSON)
+
+  const user = await User.findOne({
+    otp,
+    otp_expire: {
+      $gt: Date.now(), // condition that opt_expire must be greater than ($gt is the MongoDB operator for greater than) time right now
+    },
+  });
+
+  if (!user) return next(new ErrorHandler("Incorrect OTP or OTP has expired", 400)); // if user doesn't exist
   
+  if (!password) return next(new ErrorHandler("Please Enter New Password", 400)); // if user doesn't enter new password
+
+  // if user does exist:
+  user.password = password; // replace old password with new
+  user.otp = undefined; // setting otp and opt_expire to undefined will remove respective key-value pairs/entries from DB
+  user.otp_expire = undefined;
+
+  await user.save();
+
   res.status(200).json({
     success: true,
-    user, // displays user profile
+    message: "Password Changed Successfully", // displays user profile
   });
 });
-
