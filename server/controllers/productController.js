@@ -51,3 +51,23 @@ export const createProduct = asyncError(async (req, res, next) => {
     message: "Product Created Successfully",
   });
 });
+
+export const updateProduct = asyncError(async (req, res, next) => {
+  const { name, description, category, price, stock } = req.body;
+
+  const product = await Product.findById(req.params.id);
+  if (!product) return next(new ErrorHandler("Product Not Found", 404));
+
+  if(name) product.name = name;
+  if(description) product.description = description;
+  if(category) product.category = category;
+  if(price) product.price = price;
+  if(stock) product.stock = stock;
+
+  await product.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Product Updated Successfully",
+  });
+});
