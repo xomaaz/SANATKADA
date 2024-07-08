@@ -93,3 +93,25 @@ export const addProductImage = asyncError(async (req, res, next) => {
     message: "Image Added Successfully",
   });
 });
+
+export const deleteProductImage = asyncError(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+  if (!product) return next(new ErrorHandler("Product Not Found", 404));
+
+  const id = req.query.id;
+
+  if (!id) return next(new ErrorHandler("Please enter image id", 400));
+
+  let isExist = -1;
+
+  product.images.forEach((item, index) => {
+    if (item._id.toString() === id.toString()) isExist = index;
+  });
+
+  console.log(isExist);
+
+  res.status(200).json({
+    success: true,
+    message: "Image Deleted Successfully",
+  });
+});
