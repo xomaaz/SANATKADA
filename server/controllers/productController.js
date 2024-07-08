@@ -3,6 +3,7 @@ import { Product } from "../models/productModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { getDataUri } from "../utils/features.js";
 import cloudinary from "cloudinary";
+import { Category } from "../models/categoryModel.js";
 
 export const getAllProducts = asyncError(async (req, res, next) => {
   // Search & Category query (to be done later)
@@ -115,3 +116,9 @@ export const deleteProductImage = asyncError(async (req, res, next) => {
     message: "Image Deleted Successfully",
   });
 });
+
+export const addCategory = asyncError(async (req, res, next) => {});
+
+export const getAllCategories = asyncError(async (req, res, next) => {});
+
+export const deleteCategory = asyncError(async (req, res, next) => {});
