@@ -7,4 +7,4 @@ const schema = new mongoose.Schema({
   },
 });
 
-export const Order = mongoose.model("Category", schema);
+export const Category = mongoose.model("Category", schema);
