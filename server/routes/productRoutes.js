@@ -7,11 +7,11 @@ const router = express.Router();
 
 router.get("/all", getAllProducts);
 
-router.route("/single/:id").get(getProductDetails).put(isAuthenticated, updateProduct).delete(isAuthenticated, deleteProductImage); // TODO: send delete request to product route
+router.route("/single/:id").get(getProductDetails).put(isAuthenticated, updateProduct);
 
 router.post("/new", isAuthenticated, singleUpload, createProduct);
 
-router.route("/images/:id").post(isAuthenticated, singleUpload, addProductImage);
+router.route("/images/:id").post(isAuthenticated, singleUpload, addProductImage).delete(isAuthenticated, deleteProductImage);
 
 router.post("/category", isAuthenticated, addCategory);
 
