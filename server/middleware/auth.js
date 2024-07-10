@@ -22,3 +22,9 @@ export const isAuthenticated = asyncError(
     next(); // invoking getMyProfile
   }
 );
+
+export const isAdmin = asyncError(async (req, res, next) => {
+    if (req.user.role != "admin") return next(new ErrorHandler("Only Admin allowed", 401));
+    next();
+  }
+);
