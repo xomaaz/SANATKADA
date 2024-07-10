@@ -6,8 +6,15 @@ import cloudinary from "cloudinary";
 import { Category } from "../models/categoryModel.js";
 
 export const getAllProducts = asyncError(async (req, res, next) => {
-  // Search & Category query (to be done later)
-  const products = await Product.find({});
+  const { keyword, category } = req.query;
+
+  const products = await Product.find({
+    name: { // to search for product
+      $regex: keyword ? keyword : "", // regex allows to search for patterns
+      $options: "i",
+    },
+    category: category ? category : undefined, // to search for category
+  });
 
   res.status(200).json({
     success: true,
@@ -16,8 +23,7 @@ export const getAllProducts = asyncError(async (req, res, next) => {
 });
 
 export const getAdminProducts = asyncError(async (req, res, next) => {
-  // Search & Category query (to be done later)
-  const products = await Product.find({});
+  const products = await Product.find({}).populate("category");
 
   res.status(200).json({
     success: true,
@@ -26,7 +32,7 @@ export const getAdminProducts = asyncError(async (req, res, next) => {
 });
 
 export const getProductDetails = asyncError(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate("category");
 
   if (!product) return next(new ErrorHandler("Product Not Found", 404));
 
