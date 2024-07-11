@@ -20,9 +20,11 @@ app.get("/", (req, res, next) => {
 // Importing Routers
 import user from "./routes/userRoutes.js";
 import product from "./routes/productRoutes.js";
+import order from "./routes/orderRoutes.js"
 
 app.use("/api/v1/user", user);
 app.use("/api/v1/product", product);
+app.use("/api/v1/order", order);
 
 // Using Error Middleware
 app.use(errorMiddleware)
