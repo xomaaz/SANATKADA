@@ -4,16 +4,16 @@ import { colors, defaultStyle, formHeading, inputOptions, formStyles as styles }
 import { Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
 
-const Login = ({ navigation }) => {
+const ForgetPassword = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const loading = true;
 
   const submitHandler = () => {
     alert("Yeah");
     // will remove this in future
+    navigation.navigate("verify");
   }
 
   return (
@@ -22,7 +22,7 @@ const Login = ({ navigation }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20 }}>
-        <Text style={formHeading}>Login</Text>
+        <Text style={formHeading}>Forget Password</Text>
       </View>
 
       <View style={styles.container}>
@@ -34,39 +34,23 @@ const Login = ({ navigation }) => {
           onChangeText={setEmail} 
         />
 
-        <TextInput 
-          {...inputOptions} 
-          placeholder='Password' 
-          secureTextEntry={true}
-          value={password} 
-          onChangeText={setPassword} 
-        />
-
-        <TouchableOpacity
-          style={styles.forgetText}
-          activeOpacity={0.8}
-          onPress={()=>navigation.navigate("forgetpassword")}
-        >
-          <Text>Forget Password?</Text>
-        </TouchableOpacity>
-
         <Button
           loading={loading}
           style={styles.btn}
           textColor={colors.color2}
-          disabled={email == "" || password == ""}
+          disabled={email == ""}
           onPress={submitHandler}
         >
-          Log In
+          Send OTP
         </Button>
 
         <Text style={styles.or}>OR</Text>
 
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation.navigate("signup")}
+          onPress={() => navigation.navigate("login")}
         >
-          <Text style={styles.link}>Sign Up</Text>
+          <Text style={styles.link}>Log In</Text>
         </TouchableOpacity>
 
       </View>
@@ -77,4 +61,4 @@ const Login = ({ navigation }) => {
   )
 }
 
-export default Login
+export default ForgetPassword;
