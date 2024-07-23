@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { colors, defaultStyle, formHeading, inputOptions, formStyles as styles } from '../styles/styles';
 import { Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions/userActions';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useMessageAndErrorUser } from '../utils/hooks';
 
 const Login = ({ navigation }) => {
 
@@ -13,31 +13,8 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const { loading, message, error, isAuthenticated } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if(error){
-      Toast.show({
-        type: "error",
-        text1: error,
-      });
-      dispatch({
-        type: "clearError",
-      });
-    }
-
-    if(message){
-      navigation.navigate("profile");
-      Toast.show({
-        type: "success",
-        text1: message,
-      });
-      dispatch({
-        type: "clearMessage",
-      });
-    }
-  }, [error, message, dispatch]);
-
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  
   const submitHandler = () => {
     dispatch(login(email, password))
   };
