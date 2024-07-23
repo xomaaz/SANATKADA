@@ -3,12 +3,13 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { colors } from '../styles/styles';
 import { Avatar } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 const Footer = ({ activeRoute = "Home" }) => {
 
     const navigate = useNavigation();
-    const loading = false; // this represents whether the database is connected or not
-    const isAuthenticated = false;
+
+    const { loading, isAuthenticated } = useSelector((state) => state.user); // loading represents whether the database is connected or not
 
     const navigationHandler = (key) => {
         switch (key) {

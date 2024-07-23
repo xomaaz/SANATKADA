@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from "./screens/Home"
@@ -14,12 +14,20 @@ import Login from './screens/Login';
 import ForgetPassword from './screens/ForgetPassword';
 import Verify from './screens/Verify';
 import Signup from './screens/Signup';
+import { useDispatch } from 'react-redux';
+import { loadUser } from './redux/actions/userActions';
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
-  return (
+  
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  return (
   <NavigationContainer>
     <Stack.Navigator 
 
