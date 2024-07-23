@@ -20,56 +20,56 @@ const Login = ({ navigation }) => {
     <>
       <View style={{ ...defaultStyle, backgroundColor: colors.color2 }}>
 
-      {/* Heading */}
-      <View style={{ marginBottom: 20 }}>
-        <Text style={formHeading}>Login</Text>
-      </View>
+        {/* Heading */}
+        <View style={{ marginBottom: 20 }}>
+          <Text style={formHeading}>Login</Text>
+        </View>
 
-      <View style={styles.container}>
-        <TextInput 
-          {...inputOptions} 
-          placeholder='Email' 
-          keyboardType='email-address' 
-          value={email} 
-          onChangeText={setEmail} 
-        />
+        <View style={styles.container}>
+          <TextInput 
+            {...inputOptions} 
+            placeholder='Email' 
+            keyboardType='email-address' 
+            value={email} 
+            onChangeText={setEmail} 
+          />
 
-        <TextInput 
-          {...inputOptions} 
-          placeholder='Password' 
-          secureTextEntry={true}
-          value={password} 
-          onChangeText={setPassword} 
-        />
+          <TextInput 
+            {...inputOptions} 
+            placeholder='Password' 
+            secureTextEntry={true}
+            value={password} 
+            onChangeText={setPassword} 
+          />
 
-        <TouchableOpacity
-          style={styles.forgetText}
-          activeOpacity={0.8}
-          onPress={()=>navigation.navigate("forgetpassword")}
-        >
-          <Text>Forget Password?</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.forgetText}
+            activeOpacity={0.8}
+            onPress={()=>navigation.navigate("forgetpassword")}
+          >
+            <Text>Forget Password?</Text>
+          </TouchableOpacity>
 
-        <Button
-          loading={loading}
-          style={styles.btn}
-          textColor={colors.color2}
-          disabled={email == "" || password == ""}
-          onPress={submitHandler}
-        >
-          Log In
-        </Button>
+          <Button
+            loading={loading}
+            style={styles.btn}
+            textColor={colors.color2}
+            disabled={email == "" || password == ""}
+            onPress={submitHandler}
+          >
+            Log In
+          </Button>
 
-        <Text style={styles.or}>OR</Text>
+          <Text style={styles.or}>OR</Text>
 
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate("signup")}
-        >
-          <Text style={styles.link}>Sign Up</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("signup")}
+          >
+            <Text style={styles.link}>Sign Up</Text>
+          </TouchableOpacity>
 
-      </View>
+        </View>
       </View>
 
       <Footer activeRoute='profile' />

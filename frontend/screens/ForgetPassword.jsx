@@ -20,40 +20,40 @@ const ForgetPassword = ({ navigation }) => {
     <>
       <View style={{ ...defaultStyle, backgroundColor: colors.color2 }}>
 
-      {/* Heading */}
-      <View style={{ marginBottom: 20 }}>
-        <Text style={formHeading}>Forget Password</Text>
-      </View>
+        {/* Heading */}
+        <View style={{ marginBottom: 20 }}>
+          <Text style={formHeading}>Forget Password</Text>
+        </View>
 
-      <View style={styles.container}>
-        <TextInput 
-          {...inputOptions} 
-          placeholder='Email' 
-          keyboardType='email-address' 
-          value={email} 
-          onChangeText={setEmail} 
-        />
+        <View style={styles.container}>
+          <TextInput 
+            {...inputOptions} 
+            placeholder='Email' 
+            keyboardType='email-address' 
+            value={email} 
+            onChangeText={setEmail} 
+          />
 
-        <Button
-          loading={loading}
-          style={styles.btn}
-          textColor={colors.color2}
-          disabled={email == ""}
-          onPress={submitHandler}
-        >
-          Send OTP
-        </Button>
+          <Button
+            loading={loading}
+            style={styles.btn}
+            textColor={colors.color2}
+            disabled={email == ""}
+            onPress={submitHandler}
+          >
+            Send OTP
+          </Button>
 
-        <Text style={styles.or}>OR</Text>
+          <Text style={styles.or}>OR</Text>
 
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate("login")}
-        >
-          <Text style={styles.link}>Log In</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("login")}
+          >
+            <Text style={styles.link}>Log In</Text>
+          </TouchableOpacity>
 
-      </View>
+        </View>
       </View>
 
       <Footer activeRoute='profile' />
