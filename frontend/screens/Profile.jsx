@@ -5,6 +5,8 @@ import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import { useDispatch } from 'react-redux';
+import { useMessageAndErrorUser } from '../utils/hooks';
 
 const user = {
   name: "Yoman",
@@ -13,9 +15,16 @@ const user = {
 const loading = false;
 
 const Profile = ({ navigation }) => {
-
   const [avatar, setAvatar] = useState(null);
   
+  const dispatch = useDispatch();
+
+  const loading = useMessageAndErrorUser(navigation, dispatch, "login");
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   const navigateHandler = (text) => {
     switch (text) {
       case "Admin":

@@ -22,7 +22,7 @@ export const useMessageAndErrorUser = (
     }
 
     if (message) {
-      navigation.reset({
+      navigation.reset({ // resets navigation once user logs in or logs out to prevent the back button from going to previous screens
         index: 0,
         routes: [{ name: navigateTo }],
       });
