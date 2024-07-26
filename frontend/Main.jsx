@@ -48,7 +48,6 @@ const Main = () => {
         <Stack.Screen name="forgetpassword" component={ForgetPassword} />
         <Stack.Screen name="verify" component={Verify} />
         <Stack.Screen name="signup" component={Signup} />
-        <Stack.Screen name="orders" component={Orders} />
       </Stack.Group>
     </Stack.Navigator>
 
