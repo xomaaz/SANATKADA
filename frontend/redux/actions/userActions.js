@@ -1,5 +1,36 @@
 import { server } from "../store";
 
+export const register = (formData) => async (dispatch) => {
+  try {
+    dispatch({ // first, dispatch a login request
+      type: "registerRequest",
+    });
+
+    // Axios here; then fetch the data
+    const { data } = await axios.post(`${server}/user/new`, 
+      formData,
+      {
+        headers: {
+          "Content-Type" : "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ // finally, after fetching the data, dispatch success
+      type: "registerSuccess",
+      payload: data.message,
+    });
+    
+  } catch (error) {
+    dispatch({ // if login fails
+      type: "registerFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ // first, dispatch a login request
@@ -14,6 +45,7 @@ export const login = (email, password) => async (dispatch) => {
         headers: {
           "Content-Type" : "application/json",
         },
+        withCredentials: true,
       }
     );
 

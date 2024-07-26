@@ -12,6 +12,9 @@ export const userReducer = createReducer({
     })
     .addCase("logoutRequest", (state) => {
       state.loading = true;
+    })
+    .addCase("registerRequest", (state) => {
+      state.loading = true;
     });
   builder
     .addCase("loginSuccess", (state, action) => {
@@ -29,6 +32,11 @@ export const userReducer = createReducer({
       state.isAuthenticated = false;
       state.message = action.payload;
       state.user = null;
+    })
+    .addCase("registerSuccess", (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.message = action.payload;
     });
   builder
     .addCase("loginFail", (state, action) => {
@@ -44,6 +52,11 @@ export const userReducer = createReducer({
     .addCase("logoutFail", (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
+      state.error = action.payload;
+    })
+    .addCase("registerFail", (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
       state.error = action.payload;
     });
   builder.addCase("clearError", (state) => {

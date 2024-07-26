@@ -3,6 +3,10 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { colors, defaultImg, defaultStyle, formHeading, inputOptions, formStyles as styles } from '../styles/styles';
 import { Avatar, Button, TextInput } from 'react-native-paper';
 import Footer from '../components/Footer';
+import mime from "mime";
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/actions/userActions';
+import { useMessageAndErrorUser } from '../utils/hooks';
 
 const Signup = ({ navigation }) => {
 
@@ -14,16 +18,34 @@ const Signup = ({ navigation }) => {
   const [country, setCountry] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [avatar, setAvatar] = useState("");
+  
+  const dispatch = useDispatch();
 
-  const loading = true;
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
   const disableBtn = !name || !email || !password || !address || !city || !country || !pinCode;
 
   const submitHandler = () => {
-    alert("Yeah");
-    // will remove this in future
-    navigation.navigate("verify");
-  }
+    const myForm = new FormData();
+
+    myForm.append("name", name)
+    myForm.append("email", email)
+    myForm.append("password", password)
+    myForm.append("address", address)
+    myForm.append("city", city)
+    myForm.append("country", country)
+    myForm.append("pinCode", pinCode)
+
+    if (avatar !== "") { // if avatar exists
+      myForm.append("file", {
+        uri: avatar,
+        type: mime.getType(avatar),
+        name: avatar.split("/").pop()
+      })
+    }
+
+    dispatch(register(myForm));
+  };
 
   return (
     <>
