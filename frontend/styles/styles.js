@@ -81,5 +81,5 @@ export const formStyles = StyleSheet.create({
   },
 });
 
-export const defaultImg =
-  "https://p.kindpng.com/picc/s/451-4517876_default-profile-hd-png-download.png";
+//export const defaultImg =
+//  "https://p.kindpng.com/picc/s/451-4517876_default-profile-hd-png-download.png";
