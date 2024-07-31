@@ -33,6 +33,7 @@ const Login = ({ navigation }) => {
     }
 
     if(message){
+      navigation.navigate("profile");
       Toast.show({
         type: "success",
         text1: message
