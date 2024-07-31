@@ -8,11 +8,9 @@ export const useMessageAndErrorUser = (
   dispatch,
   navigateTo = "login"
 ) => {
-  const { loading, message, error, isAuthenticated } = useSelector(
+  const { loading, message, error } = useSelector(
     (state) => state.user
   );
-
-  console.log(isAuthenticated)
 
   useEffect(() => {
     if (error) {
