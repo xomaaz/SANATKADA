@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Home from "./screens/Home"
 import ProductDetails from './screens/ProductDetails';
 import Toast from 'react-native-toast-message';
@@ -18,6 +18,9 @@ const Stack = createNativeStackNavigator();
 
 const Main = () => {
   const dispatch = useDispatch();
+
+  const { user } = useSelector(state => state.user)
+  console.log(user)
 
   useEffect(() => {
     dispatch(loadUser());
