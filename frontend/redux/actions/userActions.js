@@ -33,3 +33,28 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ // first, dispatch a load user request
+      type: "loadUserRequest",
+    });
+
+    const { data } = await axios.get(`${server}/user/me`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ // after fetching the data, dispatch success
+      type: "loadUserSuccess",
+      payload: data.user,
+    });
+    
+  } catch (error) {
+    dispatch({ // if loading user fails
+      type: "loadUserFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
