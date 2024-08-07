@@ -7,15 +7,15 @@ import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import { logout } from '../redux/actions/userActions';
 import { useMessageAndErrorUser } from '../utils/hooks';
-import { useDispatch } from 'react-redux';
-
-const user = {
-  name: "Yoman",
-  email: "yoman@gmail.com",
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { defaultImg } from '../styles/styles';
 
 const Profile = ({ navigation }) => {
-  const [avatar, setAvatar] = useState(null);
+  const { user } = useSelector(state => state.user);
+
+  const [avatar, setAvatar] = useState(
+    user?.avatar ? user.avatar.url : defaultImg
+  );
   
   const dispatch = useDispatch();
 
@@ -97,7 +97,13 @@ const Profile = ({ navigation }) => {
                 }}
               >
                 <ButtonBox handler={navigateHandler} text={"Orders"} icon={"format-list-bulleted-square"} />
-                <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
+                
+                {
+                  user?.role == "admin" && ( 
+                    <ButtonBox handler={navigateHandler} text={"Admin"} icon={"view-dashboard"} reverse={true} />
+                  )
+                }
+                
                 <ButtonBox handler={navigateHandler} text={"Profile"} icon={"pencil"} />
                 </View>
 
