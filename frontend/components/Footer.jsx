@@ -40,78 +40,82 @@ const Footer = ({ activeRoute = "Home" }) => {
     }
  
   return (
-    <View style={{
-        backgroundColor: colors.color1,
-        borderTopRightRadius: 120,
-        borderTopLeftRadius: 120
-    }}>
-
+    loading == false && ( 
         <View style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly"
-        }}>
-            <TouchableOpacity 
-            activeOpacity={0.8} 
-            onPress={()=> navigationHandler(1) }
-            >
-                <Avatar.Icon
-                { ...avatarOptions }
-                icon={ activeRoute === "cart" ? "shopping" : "shopping-outline" } 
-                />
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-            activeOpacity={0.8} 
-            onPress={()=> navigationHandler(2) }
-            >
-                <Avatar.Icon
-                { ...avatarOptions }
-                icon={ 
-                    isAuthenticated === false
-                    ? activeRoute === "profile" 
-                        ? "login" 
-                        : "login"
-                    : activeRoute === "profile" 
-                        ? "account" 
-                        : "account-outline" 
-                }
-                />
-            </TouchableOpacity>
-
-        </View>
-
-        <View style={{
+            backgroundColor: colors.color1,
+            borderTopRightRadius: 120,
+            borderTopLeftRadius: 120,
             position: "absolute",
-            width: 80,
-            height: 80,
-            backgroundColor: colors.color2,
-            borderRadius: 100,
-            justifyContent: "center",
-            alignItems: "center",
-            top: -50,
-            alignSelf: "center"
+            width: "100%",
+            bottom: 0,
         }}>
-            <View style={{
-                borderRadius: 100,
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
 
-            <TouchableOpacity 
-            activeOpacity={0.8} 
-            onPress={()=> navigationHandler(0) }
-            >
-                <Avatar.Icon
-                { ...avatarOptions }
-                icon={ activeRoute === "Home" ? "home" : "home-outline" }
-                />
-            </TouchableOpacity>
+            <View style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly"
+            }}>
+                <TouchableOpacity 
+                activeOpacity={0.8} 
+                onPress={()=> navigationHandler(1) }
+                >
+                    <Avatar.Icon
+                    { ...avatarOptions }
+                    icon={ activeRoute === "cart" ? "shopping" : "shopping-outline" } 
+                    />
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                activeOpacity={0.8} 
+                onPress={()=> navigationHandler(2) }
+                >
+                    <Avatar.Icon
+                    { ...avatarOptions }
+                    icon={ 
+                        isAuthenticated === false
+                        ? activeRoute === "profile" 
+                            ? "login" 
+                            : "login"
+                        : activeRoute === "profile" 
+                            ? "account" 
+                            : "account-outline" 
+                    }
+                    />
+                </TouchableOpacity>
 
             </View>
-        </View>
 
-    </View>
-  )
-}
+            <View style={{
+                position: "absolute",
+                width: 80,
+                height: 80,
+                backgroundColor: colors.color2,
+                borderRadius: 100,
+                justifyContent: "center",
+                alignItems: "center",
+                top: -50,
+                alignSelf: "center"
+            }}>
+                <View style={{
+                    borderRadius: 100,
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}>
+
+                <TouchableOpacity 
+                activeOpacity={0.8} 
+                onPress={()=> navigationHandler(0) }
+                >
+                    <Avatar.Icon
+                    { ...avatarOptions }
+                    icon={ activeRoute === "Home" ? "home" : "home-outline" }
+                    />
+                </TouchableOpacity>
+
+                </View>
+            </View>
+
+        </View>
+    )  
+)}
 
 export default Footer
