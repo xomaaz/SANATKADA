@@ -3,47 +3,30 @@ import { View, Text, ScrollView } from 'react-native'
 import { colors, defaultStyle, formHeading, inputOptions, formStyles as styles } from '../styles/styles';
 import { Button, TextInput } from 'react-native-paper';
 import mime from "mime";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/actions/userActions';
-import { useMessageAndErrorUser } from '../utils/hooks';
+import { useMessageAndErrorOther, useMessageAndErrorUser } from '../utils/hooks';
 import Header from '../components/Header';
+import { updateProfile } from '../redux/actions/otherAction';
 
 const UpdateProfile = ({ navigation, route }) => {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [pinCode, setPinCode] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const { user } = useSelector(state => state.user)
+
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
+  const [address, setAddress] = useState(user?.address);
+  const [city, setCity] = useState(user?.city);
+  const [country, setCountry] = useState(user?.country);
+  const [pinCode, setPinCode] = useState(user?.pinCode.toString());
   
   const dispatch = useDispatch();
-
-  const disableBtn = !name || !email || !address || !city || !country || !pinCode;
+  const loading = useMessageAndErrorOther(dispatch, navigation, "profile");
 
   const submitHandler = () => {
-    const myForm = new FormData();
-
-    myForm.append("name", name)
-    myForm.append("email", email)
-    myForm.append("address", address)
-    myForm.append("city", city)
-    myForm.append("country", country)
-    myForm.append("pinCode", pinCode)
-
-    if (avatar !== "") { // if avatar exists
-      myForm.append("file", {
-        uri: avatar,
-        type: mime.getType(avatar),
-        name: avatar.split("/").pop()
-      })
-    }
-    console.log("Form Data: ", myForm);
-    dispatch(register(myForm));
+    dispatch(updateProfile(name, email, address, city, country, pinCode));
   };
 
-  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
   useEffect(() => {
     if (route.params?.image) setAvatar(route.params.image);
@@ -115,7 +98,6 @@ const UpdateProfile = ({ navigation, route }) => {
             loading={loading}
             style={styles.btn}
             textColor={colors.color2}
-            disabled={disableBtn}
             onPress={submitHandler}
           >
             Update
