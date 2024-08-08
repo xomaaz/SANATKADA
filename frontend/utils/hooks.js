@@ -73,9 +73,9 @@ export const useMessageAndErrorOther = (
         type: "clearMessage",
       });
 
-      navigateTo ? navigation.navigate(navigateTo) : null;
+      navigateTo && navigation.navigate(navigateTo);
       
-      func ? dispatch(func()) : null;
+      func && dispatch(func());
     }
   }, [error, message, dispatch]);
 
