@@ -5,10 +5,11 @@ import { Avatar, Button } from 'react-native-paper'
 import ButtonBox from '../components/ButtonBox';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
-import { logout } from '../redux/actions/userActions';
+import { loadUser, logout } from '../redux/actions/userActions';
 import { useMessageAndErrorUser } from '../utils/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultImg } from '../styles/styles';
+import { useIsFocused } from '@react-navigation/native';
 
 const Profile = ({ navigation, route }) => {
   const { user } = useSelector(state => state.user);
@@ -18,6 +19,7 @@ const Profile = ({ navigation, route }) => {
   );
   
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   const loading = useMessageAndErrorUser(navigation, dispatch, "login");
 
@@ -54,7 +56,11 @@ const Profile = ({ navigation, route }) => {
       setAvatar(route.params.image);
       // dispatch updatePic here
     }
-  }, [route.params]);
+
+    dispatch(loadUser()); // whenever the user is on Profile screen, ...
+    //... the app will load user info again such that screens like UpdateProfile ...
+    //... display latest user info (using isFocused is required for this to work in React Native) 
+  }, [route.params, dispatch, isFocused]);
 
   return (
     <>
