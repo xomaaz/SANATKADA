@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { colors, defaultStyle, formHeading } from '../styles/styles'
 import { Avatar, Button } from 'react-native-paper'
@@ -10,7 +10,7 @@ import { useMessageAndErrorUser } from '../utils/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultImg } from '../styles/styles';
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation, route }) => {
   const { user } = useSelector(state => state.user);
 
   const [avatar, setAvatar] = useState(
@@ -47,7 +47,14 @@ const Profile = ({ navigation }) => {
           navigation.navigate("orders");
         break;
     }
-  }
+  };
+
+  useEffect(() => {
+    if (route.params?.image) {
+      setAvatar(route.params.image);
+      // dispatch updatePic here
+    }
+  }, [route.params]);
 
   return (
     <>
