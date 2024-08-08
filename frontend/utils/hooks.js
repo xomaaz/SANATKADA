@@ -73,9 +73,9 @@ export const useMessageAndErrorOther = (
         type: "clearMessage",
       });
 
-      navigateTo && navigation.navigate(navigateTo);
+      navigateTo && navigation.navigate(navigateTo); // if navigateTo != null, then statement on the right of && operator will be executed
       
-      func && dispatch(func());
+      func && dispatch(func()); // if func != null, then statement on the right of && operator will be executed
     }
   }, [error, message, dispatch]);
 
