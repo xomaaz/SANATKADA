@@ -12,8 +12,19 @@ export const otherReducer = createReducer({}, builder => {
     .addCase("updatePasswordFail", (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    })
+    .addCase("updateProfileRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("updateProfileSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    })
+    .addCase("updateProfileFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
-    
+
   builder.addCase("clearError", (state) => {
     state.error = null;
   });
