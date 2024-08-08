@@ -6,10 +6,12 @@ import ButtonBox from '../components/ButtonBox';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import { loadUser, logout } from '../redux/actions/userActions';
-import { useMessageAndErrorUser } from '../utils/hooks';
+import { useMessageAndErrorOther, useMessageAndErrorUser } from '../utils/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultImg } from '../styles/styles';
 import { useIsFocused } from '@react-navigation/native';
+import mime from "mime";
+import { updatePic } from '../redux/actions/otherAction';
 
 const Profile = ({ navigation, route }) => {
   const { user } = useSelector(state => state.user);
@@ -51,10 +53,19 @@ const Profile = ({ navigation, route }) => {
     }
   };
 
+  const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
+
   useEffect(() => {
     if (route.params?.image) {
       setAvatar(route.params.image);
       // dispatch updatePic here
+      const myForm = new FormData();
+      myForm.append("file", {
+        uri: route.params.image,
+        type: mime.getType(route.params.image),
+        name: route.params.image.split("/").pop(),
+      });
+      dispatch(updatePic(myForm));
     }
 
     dispatch(loadUser()); // whenever the user is on Profile screen, ...
@@ -85,9 +96,10 @@ const Profile = ({ navigation, route }) => {
                 />
 
                 <TouchableOpacity 
+                  disabled = {loadingPic}
                   onPress={() => navigation.navigate("camera", { updateProfile: true })}
                 >
-                  <Button textColor={colors.color1}>Change Photo</Button>
+                  <Button disabled={loadingPic} loading={loadingPic} textColor={colors.color1}>Change Photo</Button>
                 </TouchableOpacity>
 
                 <Text style={styles.name}>

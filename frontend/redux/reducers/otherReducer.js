@@ -23,6 +23,17 @@ export const otherReducer = createReducer({}, builder => {
     .addCase("updateProfileFail", (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    })
+    .addCase("updatePicRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("updatePicSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    })
+    .addCase("updatePicFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
 
   builder.addCase("clearError", (state) => {

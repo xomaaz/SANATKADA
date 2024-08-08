@@ -61,3 +61,34 @@ export const updateProfile = (name, email, address, city, country, pinCode) => a
     });
   }
 };
+
+
+export const updatePic = (formData) => async (dispatch) => {
+  try {
+    dispatch({ // first, dispatch a login request
+      type: "updatePicRequest",
+    });
+
+    // Axios here; then fetch the data
+    const { data } = await axios.put(`${server}/user/updatepic`, 
+      formData,
+      {
+        headers: {
+          "Content-Type" : "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ // finally, after fetching the data, dispatch success
+      type: "updatePicSuccess",
+      payload: data.message,
+    });
+    
+  } catch (error) {
+    dispatch({ // if login fails
+      type: "updatePicFail",
+      payload: error.response.data.message,
+    });
+  }
+};
