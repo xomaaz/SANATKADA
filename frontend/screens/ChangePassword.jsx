@@ -3,20 +3,22 @@ import { View, Text } from 'react-native'
 import { colors, defaultStyle, formHeading, inputOptions, formStyles as styles } from '../styles/styles';
 import { Button, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/actions/userActions';
 import { useMessageAndErrorUser } from '../utils/hooks';
 import Header from '../components/Header';
+import { updatePassword } from '../redux/actions/otherAction';
+import { useMessageAndErrorOther } from '../utils/hooks';
 
-const ChangePassword = ({ navigation }) => {
-
+const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   const dispatch = useDispatch();
-  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const loading = useMessageAndErrorOther(dispatch);
 
   const submitHandler = () => {
-    dispatch(login(email, password))
+    dispatch(updatePassword(oldPassword, newPassword));
+    setOldPassword("");
+    setNewPassword("");
   };
 
   return (

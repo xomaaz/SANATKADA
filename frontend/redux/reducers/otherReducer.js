@@ -13,4 +13,12 @@ export const otherReducer = createReducer({}, builder => {
       state.loading = false;
       state.error = action.payload;
     });
+    
+  builder.addCase("clearError", (state) => {
+    state.error = null;
+  });
+
+  builder.addCase("clearMessage", (state) => {
+    state.message = null;
+  });
 });
