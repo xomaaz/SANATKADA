@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import { Avatar, Button } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchModal from '../components/SearchModal';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../components/Footer';
 import Heading from '../components/Heading';
+import { getAllProducts } from "../redux/actions/productAction";
 
 const categories = [
     {category: "Flacko", _id: "001"}, 
@@ -43,14 +45,14 @@ const products = [{
 }];
 
 const Home = () => {
-
-
-
     const [category, setCategory] = useState("")
     const [activeSearch, setActiveSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
  
     const navigate = useNavigation();
+    const dispatch = useDispatch();
+
+    const { products } = useSelector((state) => state.product);
 
     const categoryButtonHandler = (id) => {
         setCategory(id);
@@ -59,6 +61,11 @@ const Home = () => {
     const addToCartHandler = (id) => {
         console.log("Add to Cart", id)
     }
+
+    useEffect(() => {
+        dispatch(getAllProducts())
+    }, [dispatch])
+    
 
   return (
     <>
