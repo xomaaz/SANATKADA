@@ -1,26 +1,25 @@
 import axios from "axios";
 import { server } from "../store";
 
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (keyword, category) => async (dispatch) => {
   try {
-    dispatch({ // first, dispatch a request
-      type: "getAllProductRequest",
+    dispatch({
+      type: "getAllProductsRequest",
     });
-
-    const { data } = await axios.get(`${server}/product/all`,
+    const { data } = await axios.get(
+      `${server}/product/all?keyword=${keyword}&category=${category}`,
       {
         withCredentials: true,
       }
     );
 
-    dispatch({ // after fetching the data, dispatch success
-      type: "getAllProductSuccess",
+    dispatch({
+      type: "getAllProductsSuccess",
       payload: data.products,
     });
-    
   } catch (error) {
-    dispatch({ // if request fails, dispatch fail
-      type: "getAllProductFail",
+    dispatch({
+      type: "getAllProductsFail",
       payload: error.response.data.message,
     });
   }
@@ -29,23 +28,19 @@ export const getAllProducts = () => async (dispatch) => {
 
 export const getAdminProducts = () => async (dispatch) => {
   try {
-    dispatch({ // first, dispatch a request
+    dispatch({
       type: "getAdminProductsRequest",
     });
+    const { data } = await axios.get(`${server}/product/admin`, {
+      withCredentials: true,
+    });
 
-    const { data } = await axios.get(`${server}/product/admin`,
-      {
-        withCredentials: true,
-      }
-    );
-
-    dispatch({ // after fetching the data, dispatch success
+    dispatch({
       type: "getAdminProductsSuccess",
       payload: data,
     });
-    
   } catch (error) {
-    dispatch({ // if request fails, dispatch fail
+    dispatch({
       type: "getAdminProductsFail",
       payload: error.response.data.message,
     });
@@ -55,23 +50,20 @@ export const getAdminProducts = () => async (dispatch) => {
 
 export const getProductDetails = (id) => async (dispatch) => {
   try {
-    dispatch({ // first, dispatch a request
+    dispatch({
       type: "getProductDetailsRequest",
     });
 
-    const { data } = await axios.get(`${server}/product/single/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await axios.get(`${server}/product/single/${id}`, {
+      withCredentials: true,
+    });
 
-    dispatch({ // after fetching the data, dispatch success
+    dispatch({
       type: "getProductDetailsSuccess",
       payload: data.product,
     });
-    
   } catch (error) {
-    dispatch({ // if request fails, dispatch fail
+    dispatch({
       type: "getProductDetailsFail",
       payload: error.response.data.message,
     });
