@@ -21,28 +21,28 @@ const categories = [
     {category: "Shah", _id: "007"}
 ]
 
-const products = [{
-    price: 349,
-    stock: 23,
-    name:"YEEZY",
-    _id: "001",
-    images: [
-        {
-            url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
-        }
-    ]
-},
-{
-    price: 549,
-    stock: 23,
-    name:"YEEZY V2",
-    _id: "002",
-    images: [
-        {
-            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
-        }
-    ]
-}];
+// const products = [{
+//     price: 349,
+//     stock: 23,
+//     name:"YEEZY",
+//     _id: "001",
+//     images: [
+//         {
+//             url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
+//         }
+//     ]
+// },
+// {
+//     price: 549,
+//     stock: 23,
+//     name:"YEEZY V2",
+//     _id: "002",
+//     images: [
+//         {
+//             url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif"
+//         }
+//     ]
+// }];
 
 const Home = () => {
     const [category, setCategory] = useState("")
@@ -54,6 +54,8 @@ const Home = () => {
 
     const { products } = useSelector((state) => state.product);
 
+    console.log(products)
+
     const categoryButtonHandler = (id) => {
         setCategory(id);
     } 
@@ -63,8 +65,8 @@ const Home = () => {
     }
 
     useEffect(() => {
-        dispatch(getAllProducts())
-    }, [dispatch])
+        dispatch(getAllProducts());
+    }, [dispatch]);
     
 
   return (

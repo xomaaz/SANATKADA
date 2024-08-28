@@ -7,7 +7,8 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
       type: "getAllProductsRequest",
     });
     const { data } = await axios.get(
-      `${server}/product/all?keyword=${keyword}&category=${category}`,
+      //`${server}/product/all?keyword=${keyword}&category=${category}`,
+      `${server}/product/all`,
       {
         withCredentials: true,
       }
