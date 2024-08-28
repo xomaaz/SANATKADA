@@ -7,6 +7,8 @@ import { Button } from 'react-native-paper'
 import { colors } from '../styles/styles'
 import CartItem from '../components/CartItem'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from "react-redux"
+import Toast from 'react-native-toast-message';
 
 export const cartItems = [
   {
@@ -27,8 +29,10 @@ export const cartItems = [
 ]
 
 const Cart = () => {
-
   navigator = useNavigation();
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector(state => state.cart)
 
   const incrementHandler = (id, qty, stock) => {
     console.log("increasing", id, qty, stock); // temporary placeholder until Redux store is implemented
@@ -58,8 +62,7 @@ const Cart = () => {
         flex: 1,
       }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {
-            cartItems.map((i,index) => (
+          { cartItems.length > 0 ? cartItems.map((i,index) => (
               <CartItem 
                 key={i.productID}
                 id={i.productID}
@@ -72,7 +75,11 @@ const Cart = () => {
                 incrementHandler={incrementHandler}
                 decrementHandler={decrementHandler}
               />
-            ))
+            )) : (
+              <Text style={{ textAlign: "center", fontSize: 18, }}>
+                No Items In Cart Yet
+              </Text>
+            )
           }
         </ScrollView>
       </View>
