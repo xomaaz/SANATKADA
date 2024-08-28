@@ -12,16 +12,6 @@ import Heading from '../components/Heading';
 import { getAllProducts } from "../redux/actions/productAction";
 import { useSetCategories } from '../utils/hooks';
 
-const categories = [
-    {category: "Flacko", _id: "001"}, 
-    {category: "A$AP", _id: "002"}, 
-    {category: "Devin", _id: "003"}, 
-    {category: "Craka", _id: "004"},
-    {category: "Maaz", _id: "005"},
-    {category: "Syed", _id: "006"},
-    {category: "Shah", _id: "007"}
-]
-
 const Home = () => {
     const [category, setCategory] = useState("")
     const [activeSearch, setActiveSearch] = useState(false)
