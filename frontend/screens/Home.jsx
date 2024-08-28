@@ -47,8 +47,8 @@ const Home = () => {
     useSetCategories(setCategories, isFocused);
 
     useEffect(() => {
-        dispatch(getAllProducts());
-    }, [dispatch]);
+        dispatch(getAllProducts(searchQuery, category));
+    }, [dispatch, searchQuery, category, isFocused]);
     
 
   return (
