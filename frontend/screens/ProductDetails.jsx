@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { colors, defaultStyle } from '../styles/styles';
 import Header from '../components/Header';
 import Carousel from 'react-native-snap-carousel';
 import { Avatar, Button } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { getProductDetails } from "../redux/actions/productAction";
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -20,30 +23,20 @@ export const iconOptions = {
 
 const ProductDetails = ( { route: { params } } ) => {
     console.log(params.id);
+
+    const {
+        product: { name, price, stock, description, images }
+    } = useSelector(state => state.product);
+
     const isCarousel = useRef();
     const [quantity, setQuantity] = useState(1);
-
-    const name = "Yeezy";
-    const price = "500"; 
-    const description = "The YEEZY BOOST 350 V2 features an upper composed of re-engineered Primeknit. The post-dyed monofilament side stripe is woven into the upper. Reflective threads are woven into the laces. The midsole utilizes adidas’ innovative BOOST™ technology.";
-    const stock = 5; // temporary stock amount
-
-    const images = [
-        {
-            id: "001",
-            url: "https://image.goat.com/attachments/product_template_pictures/images/078/084/523/original/64795_00.png.png"
-        },
-        {
-            id: "002",
-            url: "https://upload.wikimedia.org/wikipedia/commons/7/72/Adidas_Yeezy_Boost_350_Pirate_Black.gif",
-        },
-    ];
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
 
     const incrementQty = () => {
         if(stock <= quantity) return; // if stock is <= quantity, do nothing and return the same quantity
         setQuantity((prev) => prev + 1);
     };
-
     const decrementQty = () => {
         if(quantity <= 1) return; // if quantity is <= 1, do nothing and return the same quantity
         setQuantity((prev) => prev - 1);
@@ -61,6 +54,10 @@ const ProductDetails = ( { route: { params } } ) => {
                 text1: "Added to Cart"
             });
     };
+
+    useEffect(() => {
+        dispatch(getProductDetails(params.id));
+    }, [dispatch, params.id, isFocused]);
 
     return (
         <View
